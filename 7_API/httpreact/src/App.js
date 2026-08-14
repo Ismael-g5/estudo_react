@@ -1,89 +1,95 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
-//importação do custom hook useFetch
+// Importa o custom hook. A lógica de fetch/POST fica no hook, não aqui.
 import { useFetch } from './hooks/useFetch';
 
+// URL da API (json-server)
 const url = "http://localhost:8000/products";
 
-
-
 function App() {
-const [products, setProducts] = useState([]);
+  // Estado antigo da lista (não é mais usado na tela).
+  // A lista real agora vem do hook como "items".
+  const [products, setProducts] = useState([]);
 
-// hook custom o : ronemeia data para items
-const {data: items} = useFetch(url);
+  // =========================
+  // USO DO CUSTOM HOOK
+  // =========================
+  // useFetch(url) devolve:
+  //   - data  → lista de produtos da API
+  //   - httpConfig → função para configurar/disparar o POST
+  //
+  // "data: items" = renomeia data para items (só um apelido)
+  const { data: items, httpConfig } = useFetch(url);
 
-const [name, setName] = useState("");
-const [price, setPrice] = useState("");
+  // Estados controlados do formulário
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
 
-// resgatando dados
+  // Código antigo de GET (comentado de propósito):
+  // antes o App buscava sozinho; agora o hook faz isso.
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const response = await fetch(url);
+  //     const data = await response.json();
+  //     setProducts(data);
+  //   }
+  //   fetchData();
+  // }, []);
 
-// useEffect(() => {
-//   async function fetchData() {
-//     const response = await fetch(url);
-//     const data = await response.json();
-//     setProducts(data);
-//   }
-//   fetchData(); // aqui eu invoco a função
-// }, []);
+  // =========================
+  // SUBMIT DO FORMULÁRIO
+  // =========================
+  // O App NÃO faz fetch aqui.
+  // Só monta o produto e avisa o hook via httpConfig.
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // evita reload da página
 
-// console.log(products);
+    // Objeto enviado no POST.
+    // Sem id manual: o json-server gera o id sozinho.
+    const product = {
+      name,
+      price,
+    };
 
+    // Dispara o fluxo no hook:
+    // httpConfig → setConfig/setMethod → useEffect POST → setCallFetch → useEffect GET
+    httpConfig(product, "POST");
 
+    // Limpa os inputs depois do envio
+    setName("");
+    setPrice("");
+  };
 
-// adição de produtos
-
-//função POST
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const product = { id: String(products.length + 1),
-    name, price };
-
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(product),
-  });
-
-  //carregamento dinamico
-  const addedProduct = await response.json();
-  setProducts((prevProducts) => [...prevProducts, addedProduct]);
-
-  //torna as strings vazias apos a adição de um novo produto
-  setName("");
-  setPrice("");
-}
-
-
-
-// o .map aqui é ultilizado semelhante ao for, ele itera sobre cada elemento
-// assim eu consigo chamar a key de cada objeto em loop na sequencia
-// o && é uma condicional para quando o 'items' não  
-return (
+  // =========================
+  // RENDER
+  // =========================
+  // items && ... → só faz .map quando items já carregou (não é null)
+  // .map → percorre cada produto e gera um <li>
+  return (
     <div className="App">
       <h1>Produtos</h1>
       <ul>
-        
-        {items &&items.map((item) => (
+        {items && items.map((item) => (
           <li key={item.id}>{item.name}</li>
         ))}
       </ul>
+
       <div className="add-product">
         <h2>Adicionar Produto</h2>
+
+        {/* onSubmit chama handleSubmit quando o form é enviado */}
         <form onSubmit={handleSubmit}>
-          <input 
-            type="text" 
-            placeholder="Nome do Produto" 
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+          <input
+            type="text"
+            placeholder="Nome do Produto"
+            value={name} // input controlado pelo estado name
+            onChange={(e) => setName(e.target.value)} // atualiza name a cada digitação
           />
-          <input 
-            type="number" 
-            placeholder="Preço" 
-            value={price}
+          <input
+            type="number"
+            placeholder="Preço"
+            value={price} // input controlado pelo estado price
             onChange={(e) => setPrice(e.target.value)}
           />
           <button type="submit" value="Criar">Adicionar</button>
@@ -95,13 +101,7 @@ return (
 
 export default App;
 
-
-//useEffect(() => {} -> faz com que a ação seja executada assim que o componente for montado,
-// tendo em vista que o React recarrega cada ação do componente, o useEffect é utilizado para que a ação seja executada 
-// apenas uma vez, quando o componente for montado.
-
-// O useState por sua vez é utilizado para armazenar o estado de uma 
-// variável, ou seja, o valor que ela possui em determinado momento.
-
-//FetchApi é uma requisição Assincrona que nasceu no ECMAScript 2015, e é utilizada para fazer 
-// requisições HTTP, ou seja, para buscar dados de uma API.
+// Resumo do fluxo completo:
+// 1) App monta → useFetch faz GET → items aparece na tela
+// 2) Usuário envia o form → handleSubmit → httpConfig(product, "POST")
+// 3) Hook faz POST → muda callFetch → faz GET de novo → lista atualiza sozinha

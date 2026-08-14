@@ -24,6 +24,21 @@
       "id": "hAoD4_RSyNE",
       "name": "Blusa Preta",
       "price": "100"
+    },
+    {
+      "id": "JinPH6ATF3w",
+      "name": "Camisa Vermelha",
+      "price": "100"
+    },
+    {
+      "name": "Blusa Branca",
+      "price": "100",
+      "id": "LAAzJpMZRtk"
+    },
+    {
+      "name": "Blusa Verde",
+      "price": "100",
+      "id": "v5eonK5bSF4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
