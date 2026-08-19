@@ -1,16 +1,6 @@
 {
   "products": [
     {
-      "id": "1",
-      "name": "Camisa",
-      "price": 59.9
-    },
-    {
-      "id": "2",
-      "name": "Calça vermelha",
-      "price": 90
-    },
-    {
       "id": "3",
       "name": "Boné aba reta",
       "price": 29.9
@@ -39,6 +29,26 @@
       "name": "Blusa Verde",
       "price": "100",
       "id": "v5eonK5bSF4"
+    },
+    {
+      "name": "Blusa Amarela",
+      "price": "101",
+      "id": "C-hENUP_ZMk"
+    },
+    {
+      "name": "",
+      "price": "",
+      "id": "exw266W3jis"
+    },
+    {
+      "name": "",
+      "price": "",
+      "id": "72M-zBb_dsM"
+    },
+    {
+      "name": "",
+      "price": "",
+      "id": "O0PeZup8A4k"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
