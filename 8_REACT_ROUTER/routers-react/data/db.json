@@ -1,0 +1,22 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Notebook",
+      "description": "Notebook Dell Inspiron",
+      "price": 3500.00
+    },
+    {
+      "id": 2,
+      "name": "Smartphone",
+      "description": "Samsung Galaxy S23",
+      "price": 2800.00
+    },
+    {
+      "id": 3,
+      "name": "Tablet",
+      "description": "iPad Air",
+      "price": 4200.00
+    }
+  ]
+}
