@@ -40,6 +40,8 @@ function App() {
 
           {/** 5 - rota 404 */}
           <Route path="*" element={<NotFound />} />
+
+          {/* para mudar o nome da rota podemos usar - <Navigate to="/NomeDaRota">*/}
           
         </Routes>
       </BrowserRouter>

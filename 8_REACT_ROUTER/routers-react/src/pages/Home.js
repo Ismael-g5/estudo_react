@@ -6,7 +6,7 @@ import {useFetch} from '../hooks/useFetch.js';
 const Home = () => {
 
     //carregamento de dados
-    const url = "http://localhost:3001/products";
+    const url = "http://localhost:8000/products";
     const {data: items, loading, error} = useFetch(url);
 
     // o return PRECISA de parênteses: senão o JS coloca ; depois do return
