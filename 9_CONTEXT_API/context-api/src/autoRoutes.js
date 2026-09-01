@@ -1,9 +1,8 @@
 // src/autoRoutes.js
 
-// 1. Escaneia a pasta src/pages procurando arquivos .jsx ou .js
+// SOLUÇÃO: Adicionada a linha abaixo que estava faltando para definir o context
 const context = require.context("./pages", false, /\.(jsx|js)$/);
 
-// Criamos o array inicial lendo os arquivos
 const rawRoutes = context.keys().map((fileName) => {
   const componentName = fileName.replace("./", "").replace(/\.(jsx|js)$/, "");
   
@@ -11,20 +10,20 @@ const rawRoutes = context.keys().map((fileName) => {
     ? "/" 
     : `/${componentName.toLowerCase()}`;
 
-  // Pegamos todo o conteúdo exportado do arquivo
   const fileExports = context(fileName);
-  
-  // O componente continua sendo o default
   const Component = fileExports.default;
-  
-  // Captura a ordem definida no arquivo. Se esquecer de colocar, assume 99 (vai para o fim)
   const order = fileExports.order !== undefined ? fileExports.order : 99;
+
+  // AJUSTE 1: Mudei para 'true' como padrão. Assim, todas aparecem na Navbar, 
+  // e você só coloca "export const menu = false" nas páginas que quiser esconder (ex: Login, Erro 404).
+  const inMenu = fileExports.menu !== undefined ? fileExports.menu : true; 
 
   return {
     path,
     label: componentName,
     element: <Component />,
-    order, // Guardamos a ordem aqui para usar no sort abaixo
+    order, 
+    inMenu, // AJUSTE 2: Obrigatório passar a variável aqui para o App.js e Navbar verem!
   };
 });
 
