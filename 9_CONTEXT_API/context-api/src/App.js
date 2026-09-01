@@ -1,22 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router';
+import { BrowserRouter, Routes, Route} from 'react-router-dom';
 // Pages
 import About from './pages/About';
 import Home from './pages/Home';
 import BiblicalPassages from './pages/BiblicalPassages';
 
+//Components
+import NavBar from './components/NavBar'; 
+
+//Logica das Rotas automaticas
+import { autoRoutes } from './autoRoutes'; 
+
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/about" element={<About/>} />
-          <Route path="/biblical-passages" element={<BiblicalPassages/>} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <NavBar />
+      <Routes>
+        {autoRoutes.map((route) => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
+      </Routes>
+    </BrowserRouter>
   );
 }
 

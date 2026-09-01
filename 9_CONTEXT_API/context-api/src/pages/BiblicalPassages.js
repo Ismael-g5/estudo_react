@@ -1,6 +1,9 @@
+export const order = 2;
+
+
 const BiblicalPassages = () => {
   return (
-    <div>BiblicalPassages</div>
+    <div><h1>Biblical Passages</h1></div>
   )
 }
 

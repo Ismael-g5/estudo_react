@@ -1,0 +1,48 @@
+/* src/components/css/NavBar.css */
+
+/* Barra de navegação principal centralizada */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centraliza os links horizontalmente */
+  gap: 32px; /* Espaço confortável entre os links */
+  background-color: #1e1e24; 
+  padding: 18px 32px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo dos links */
+nav a {
+  color: #a0aec0; 
+  text-decoration: none; 
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+  position: relative;
+  padding: 6px 0;
+}
+
+/* Hover */
+nav a:hover {
+  color: #ffffff; 
+}
+
+/* Link Ativo */
+nav a.active {
+  color: #4fd1c5; 
+  font-weight: 600;
+}
+
+/* Linha sob o link ativo */
+nav a.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #4fd1c5;
+  border-radius: 2px;
+}
