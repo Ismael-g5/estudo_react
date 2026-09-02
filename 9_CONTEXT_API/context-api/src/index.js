@@ -4,10 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+//context provider
+import { CounterContextProvider } from './context/CounterContext';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+
+    {/* criando provider*/}
+    <CounterContextProvider>
+      <App />
+    </CounterContextProvider>
   </React.StrictMode>
 );
 
