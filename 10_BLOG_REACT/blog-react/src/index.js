@@ -4,23 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-//context provider
-import { CounterContextProvider } from './context/CounterContext';
-
-// useReducer -> mais de um dado por vez
-import { TitleColorContextProvider } from './context/TitleColorContext';
-
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-
-    {/* criando provider*/}
-    <CounterContextProvider>
-      <TitleColorContextProvider>
-      <App />
-      </TitleColorContextProvider>
-    </CounterContextProvider>
+    <App />
   </React.StrictMode>
 );
 
