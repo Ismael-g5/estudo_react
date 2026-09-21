@@ -1,5 +1,4 @@
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
@@ -7,6 +6,7 @@ import {
 } from "firebase/auth";
 
 import { useState, useEffect } from "react";
+import { auth } from "../firebase/config";
 
 export const useAuthentication = () => {
   const [error, setError] = useState(null);
@@ -14,8 +14,6 @@ export const useAuthentication = () => {
 
   // deal with memory leak
   const [cancelled, setCancelled] = useState(false);
-
-  const auth = getAuth();
 
   function checkIfIsCancelled() {
     if (cancelled) {
