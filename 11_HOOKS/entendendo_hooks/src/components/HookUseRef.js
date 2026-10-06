@@ -16,6 +16,7 @@ const HookUseRef = () => {
         numberRef.current = numberRef.current + 1
     })
 
+    
     // 2  - useRef e DOM
     const inputRef = useRef();
     const [text, setText] = useState("");
